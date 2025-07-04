@@ -135,9 +135,9 @@ const EcommercePlatforms: React.FC = () => {
             {visiblePlatforms.map((platform, index) => (
               <div
                 key={platform.id}
-                className="transform transition-all duration-500 ease-in-out hover:scale-110"
+                className="transform transition-all duration-500 ease-in-out hover:scale-110 animate-fade-in"
                 style={{
-                  animation: `fadeInScale 0.5s ease-out ${index * 0.1}s both`
+                  animationDelay: `${index * 0.1}s`
                 }}
               >
                 <Card 
@@ -210,19 +210,6 @@ const EcommercePlatforms: React.FC = () => {
           </CardHeader>
         </Card>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInScale {
-          0% {
-            opacity: 0;
-            transform: scale(0.8) translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
