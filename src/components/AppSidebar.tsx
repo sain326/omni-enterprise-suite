@@ -16,19 +16,21 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowLeft, Package, LogOut, User, Users, ShoppingCart, FileText, Settings } from 'lucide-react';
+import { ArrowLeft, Package, LogOut, User, Users, ShoppingCart, FileText, Settings, CreditCard, BarChart3, Plus, Search, Briefcase } from 'lucide-react';
 import { User as UserType, Module } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface AppSidebarProps {
   currentView: string;
-  setCurrentView: (view: 'dashboard' | 'modules' | 'module' | 'ecommerce') => void;
+  setCurrentView: (view: 'dashboard' | 'modules' | 'module' | 'ecommerce' | 'pos') => void;
   user: UserType;
   logout: () => void;
   selectedModule?: Module | null;
+  activeTab?: string;
+  setActiveTab?: (tab: string) => void;
 }
 
-export function AppSidebar({ currentView, setCurrentView, user, logout, selectedModule }: AppSidebarProps) {
+export function AppSidebar({ currentView, setCurrentView, user, logout, selectedModule, activeTab, setActiveTab }: AppSidebarProps) {
   const { switchRole } = useAuth();
 
   const handleRoleChange = (newRole: string) => {
@@ -43,28 +45,38 @@ export function AppSidebar({ currentView, setCurrentView, user, logout, selected
     switch (moduleId) {
       case 'sales':
         return [
-          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Overview', icon: BarChart3, id: 'overview' },
           { title: 'Business Partners', icon: Users, id: 'partners' },
           { title: 'Sales Orders', icon: ShoppingCart, id: 'orders' },
           { title: 'Reports', icon: FileText, id: 'reports' }
         ];
       case 'hr':
         return [
-          { title: 'Overview', icon: FileText, id: 'overview' },
-          { title: 'Employees', icon: Users, id: 'employees' },
-          { title: 'Departments', icon: Settings, id: 'departments' },
+          { title: 'Overview', icon: BarChart3, id: 'overview' },
+          { title: 'Add New', icon: Plus, id: 'add-new' },
+          { title: 'Manage', icon: Settings, id: 'manage' },
           { title: 'Reports', icon: FileText, id: 'reports' }
         ];
       case 'inventory':
         return [
-          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Overview', icon: BarChart3, id: 'overview' },
           { title: 'Products', icon: Package, id: 'products' },
           { title: 'Categories', icon: Settings, id: 'categories' },
-          { title: 'Reports', icon: FileText, id: 'reports' }
+          { title: 'Brands', icon: Briefcase, id: 'brands' },
+          { title: 'Warehouses', icon: Settings, id: 'warehouses' },
+          { title: 'Attributes', icon: Settings, id: 'attributes' },
+          { title: 'Attribute Values', icon: Settings, id: 'attribute-values' }
+        ];
+      case 'pos':
+        return [
+          { title: 'POS Terminal', icon: CreditCard, id: 'terminal' },
+          { title: 'Transactions', icon: FileText, id: 'transactions' },
+          { title: 'Reports', icon: BarChart3, id: 'reports' }
         ];
       default:
         return [
-          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Overview', icon: BarChart3, id: 'overview' },
+          { title: 'Add New', icon: Plus, id: 'add-new' },
           { title: 'Manage', icon: Settings, id: 'manage' },
           { title: 'Reports', icon: FileText, id: 'reports' }
         ];
@@ -106,12 +118,52 @@ export function AppSidebar({ currentView, setCurrentView, user, logout, selected
               <SidebarMenu>
                 {moduleNavigation.map((item) => (
                   <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton className="w-full">
+                    <SidebarMenuButton 
+                      className={`w-full ${activeTab === item.id ? 'bg-blue-100 text-blue-700' : ''}`}
+                      onClick={() => setActiveTab?.(item.id)}
+                    >
                       <item.icon className="mr-3 h-4 w-4" />
                       {item.title}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {currentView === 'pos' && (
+          <SidebarGroup>
+            <SidebarGroupLabel>POS System</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton 
+                    className={`w-full ${activeTab === 'terminal' ? 'bg-blue-100 text-blue-700' : ''}`}
+                    onClick={() => setActiveTab?.('terminal')}
+                  >
+                    <CreditCard className="mr-3 h-4 w-4" />
+                    POS Terminal
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton 
+                    className={`w-full ${activeTab === 'transactions' ? 'bg-blue-100 text-blue-700' : ''}`}
+                    onClick={() => setActiveTab?.('transactions')}
+                  >
+                    <FileText className="mr-3 h-4 w-4" />
+                    Transactions
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton 
+                    className={`w-full ${activeTab === 'reports' ? 'bg-blue-100 text-blue-700' : ''}`}
+                    onClick={() => setActiveTab?.('reports')}
+                  >
+                    <BarChart3 className="mr-3 h-4 w-4" />
+                    Reports
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

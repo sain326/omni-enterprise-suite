@@ -1,8 +1,6 @@
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DynamicForm from './DynamicForm';
 import InventoryManager from './inventory/InventoryManager';
 import SalesModule from './sales/SalesModule';
@@ -12,11 +10,11 @@ import formsData from '@/data/forms.json';
 interface ModuleViewProps {
   moduleId: string;
   moduleName: string;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 }
 
-const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
-  const [activeTab, setActiveTab] = useState('overview');
-
+const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName, activeTab, setActiveTab }) => {
   const getFormConfig = (): FormConfig | null => {
     switch (moduleId) {
       case 'hr':
@@ -39,13 +37,14 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
 
   // Special handling for specific modules
   if (moduleId === 'inventory') {
-    return <InventoryManager />;
+    return <InventoryManager activeTab={activeTab} setActiveTab={setActiveTab} />;
   }
 
   if (moduleId === 'sales') {
-    return <SalesModule />;
+    return <SalesModule activeTab={activeTab} setActiveTab={setActiveTab} />;
   }
 
+  // Generic module view based on active tab
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -55,47 +54,40 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="add-new">Add New</TabsTrigger>
-          <TabsTrigger value="manage">Manage</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
-        </TabsList>
+      {activeTab === 'overview' && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Total Records</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-blue-600">0</div>
+              <p className="text-gray-600">Items in system</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Active</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-green-600">0</div>
+              <p className="text-gray-600">Currently active</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Pending</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-orange-600">0</div>
+              <p className="text-gray-600">Awaiting action</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
-        <TabsContent value="overview" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Total Records</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-blue-600">0</div>
-                <p className="text-gray-600">Items in system</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Active</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-green-600">0</div>
-                <p className="text-gray-600">Currently active</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Pending</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-orange-600">0</div>
-                <p className="text-gray-600">Awaiting action</p>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="add-new">
+      {activeTab === 'add-new' && (
+        <>
           {formConfig ? (
             <DynamicForm config={formConfig} onSubmit={handleFormSubmit} />
           ) : (
@@ -111,42 +103,42 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
               </CardContent>
             </Card>
           )}
-        </TabsContent>
+        </>
+      )}
 
-        <TabsContent value="manage">
-          <Card>
-            <CardHeader>
-              <CardTitle>Manage {moduleName}</CardTitle>
-              <CardDescription>View and edit existing records</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-12">
-                <p className="text-gray-600 mb-4">No data available yet.</p>
-                <p className="text-sm text-gray-500">
-                  Start by adding new items using the "Add New" tab, or integrate with your backend API to display existing data.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+      {activeTab === 'manage' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Manage {moduleName}</CardTitle>
+            <CardDescription>View and edit existing records</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center py-12">
+              <p className="text-gray-600 mb-4">No data available yet.</p>
+              <p className="text-sm text-gray-500">
+                Start by adding new items using the sidebar navigation, or integrate with your backend API to display existing data.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
-        <TabsContent value="reports">
-          <Card>
-            <CardHeader>
-              <CardTitle>{moduleName} Reports</CardTitle>
-              <CardDescription>Analytics and insights</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-12">
-                <p className="text-gray-600 mb-4">Reports will be generated based on your data.</p>
-                <p className="text-sm text-gray-500">
-                  Connect your backend API to display comprehensive reports and analytics.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      {activeTab === 'reports' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>{moduleName} Reports</CardTitle>
+            <CardDescription>Analytics and insights</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center py-12">
+              <p className="text-gray-600 mb-4">Reports will be generated based on your data.</p>
+              <p className="text-sm text-gray-500">
+                Connect your backend API to display comprehensive reports and analytics.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

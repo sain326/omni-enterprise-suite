@@ -6,6 +6,7 @@ import ModuleCard from '@/components/ModuleCard';
 import Dashboard from '@/components/Dashboard';
 import ModuleView from '@/components/ModuleView';
 import EcommercePlatforms from '@/components/EcommercePlatforms';
+import POSSystem from '@/components/pos/POSSystem';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { Module } from '@/types';
@@ -13,8 +14,9 @@ import modulesData from '@/data/modules.json';
 
 const Index = () => {
   const { user, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'dashboard' | 'modules' | 'module' | 'ecommerce'>('modules');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'modules' | 'module' | 'ecommerce' | 'pos'>('modules');
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('overview');
 
   if (!user) {
     return <LoginForm />;
@@ -27,14 +29,18 @@ const Index = () => {
   const handleModuleClick = (module: Module) => {
     if (module.id === 'ecommerce') {
       setCurrentView('ecommerce');
+    } else if (module.id === 'pos') {
+      setCurrentView('pos');
+      setActiveTab('terminal');
     } else {
       setSelectedModule(module);
       setCurrentView('module');
+      setActiveTab('overview');
     }
   };
 
-  // Show sidebar only when inside a module or ecommerce
-  if (currentView === 'module' || currentView === 'ecommerce') {
+  // Show sidebar when inside a module, ecommerce, or POS
+  if (currentView === 'module' || currentView === 'ecommerce' || currentView === 'pos') {
     return (
       <SidebarProvider>
         <div className="min-h-screen flex w-full bg-gray-50">
@@ -44,16 +50,22 @@ const Index = () => {
             user={user}
             logout={logout}
             selectedModule={selectedModule}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
           />
           
           <SidebarInset className="flex-1">
             <main className="p-6">
               {currentView === 'ecommerce' && <EcommercePlatforms />}
               
+              {currentView === 'pos' && <POSSystem />}
+              
               {currentView === 'module' && selectedModule && (
                 <ModuleView 
                   moduleId={selectedModule.id} 
                   moduleName={selectedModule.name}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
                 />
               )}
             </main>
