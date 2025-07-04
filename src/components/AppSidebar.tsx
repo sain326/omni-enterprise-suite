@@ -16,8 +16,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { LayoutDashboard, Package, LogOut, User } from 'lucide-react';
-import { User as UserType } from '@/types';
+import { ArrowLeft, Package, LogOut, User, Users, ShoppingCart, FileText, Settings } from 'lucide-react';
+import { User as UserType, Module } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface AppSidebarProps {
@@ -25,29 +25,53 @@ interface AppSidebarProps {
   setCurrentView: (view: 'dashboard' | 'modules' | 'module' | 'ecommerce') => void;
   user: UserType;
   logout: () => void;
+  selectedModule?: Module | null;
 }
 
-export function AppSidebar({ currentView, setCurrentView, user, logout }: AppSidebarProps) {
+export function AppSidebar({ currentView, setCurrentView, user, logout, selectedModule }: AppSidebarProps) {
   const { switchRole } = useAuth();
 
   const handleRoleChange = (newRole: string) => {
     switchRole(newRole as 'admin' | 'user' | 'manager');
   };
 
-  const navigationItems = [
-    {
-      title: 'Dashboard',
-      icon: LayoutDashboard,
-      onClick: () => setCurrentView('dashboard'),
-      active: currentView === 'dashboard'
-    },
-    {
-      title: 'Modules',
-      icon: Package,
-      onClick: () => setCurrentView('modules'),
-      active: currentView === 'modules' || currentView === 'module' || currentView === 'ecommerce'
+  const handleBackToModules = () => {
+    setCurrentView('modules');
+  };
+
+  const getModuleNavigation = (moduleId: string) => {
+    switch (moduleId) {
+      case 'sales':
+        return [
+          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Business Partners', icon: Users, id: 'partners' },
+          { title: 'Sales Orders', icon: ShoppingCart, id: 'orders' },
+          { title: 'Reports', icon: FileText, id: 'reports' }
+        ];
+      case 'hr':
+        return [
+          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Employees', icon: Users, id: 'employees' },
+          { title: 'Departments', icon: Settings, id: 'departments' },
+          { title: 'Reports', icon: FileText, id: 'reports' }
+        ];
+      case 'inventory':
+        return [
+          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Products', icon: Package, id: 'products' },
+          { title: 'Categories', icon: Settings, id: 'categories' },
+          { title: 'Reports', icon: FileText, id: 'reports' }
+        ];
+      default:
+        return [
+          { title: 'Overview', icon: FileText, id: 'overview' },
+          { title: 'Manage', icon: Settings, id: 'manage' },
+          { title: 'Reports', icon: FileText, id: 'reports' }
+        ];
     }
-  ];
+  };
+
+  const moduleNavigation = selectedModule ? getModuleNavigation(selectedModule.id) : [];
 
   return (
     <Sidebar className="border-r">
@@ -65,21 +89,33 @@ export function AppSidebar({ currentView, setCurrentView, user, logout }: AppSid
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    onClick={item.onClick}
-                    isActive={item.active}
-                    className="w-full"
-                  >
-                    <item.icon className="mr-3 h-4 w-4" />
-                    {item.title}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleBackToModules} className="w-full">
+                  <ArrowLeft className="mr-3 h-4 w-4" />
+                  Back to Modules
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {selectedModule && (
+          <SidebarGroup>
+            <SidebarGroupLabel>{selectedModule.name}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {moduleNavigation.map((item) => (
+                  <SidebarMenuItem key={item.id}>
+                    <SidebarMenuButton className="w-full">
+                      <item.icon className="mr-3 h-4 w-4" />
+                      {item.title}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
 
         <SidebarGroup>
           <SidebarGroupLabel>Role Management</SidebarGroupLabel>

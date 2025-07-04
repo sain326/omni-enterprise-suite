@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DynamicForm from './DynamicForm';
 import InventoryManager from './inventory/InventoryManager';
+import SalesModule from './sales/SalesModule';
 import { FormConfig } from '@/types';
 import formsData from '@/data/forms.json';
 
@@ -36,9 +37,13 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
     // Here you would typically send the data to your backend API
   };
 
-  // Special handling for inventory module
+  // Special handling for specific modules
   if (moduleId === 'inventory') {
     return <InventoryManager />;
+  }
+
+  if (moduleId === 'sales') {
+    return <SalesModule />;
   }
 
   return (
