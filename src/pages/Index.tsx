@@ -20,7 +20,7 @@ const Index = () => {
     return <LoginForm />;
   }
 
-  const filteredModules = modulesData.modules.filter(module => 
+  const filteredModules = (modulesData.modules as Module[]).filter(module => 
     module.allowedRoles.includes(user.role)
   );
 

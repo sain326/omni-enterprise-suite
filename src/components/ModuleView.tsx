@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DynamicForm from './DynamicForm';
+import InventoryManager from './inventory/InventoryManager';
 import { FormConfig } from '@/types';
 import formsData from '@/data/forms.json';
 
@@ -18,11 +19,11 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
   const getFormConfig = (): FormConfig | null => {
     switch (moduleId) {
       case 'hr':
-        return formsData.employee;
+        return formsData.employee as FormConfig;
       case 'inventory':
-        return formsData.product;
+        return formsData.product as FormConfig;
       case 'sales':
-        return formsData.customer;
+        return formsData.customer as FormConfig;
       default:
         return null;
     }
@@ -34,6 +35,11 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName }) => {
     console.log(`${moduleId} form submitted:`, data);
     // Here you would typically send the data to your backend API
   };
+
+  // Special handling for inventory module
+  if (moduleId === 'inventory') {
+    return <InventoryManager />;
+  }
 
   return (
     <div className="space-y-6">
