@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Package, Variants } from 'lucide-react';
+import { Plus, Edit, Trash2, Package, Settings } from 'lucide-react';
 import { Product, ProductCategory, Brand, Attribute, AttributeValue, Warehouse } from '@/types';
 
 const Products: React.FC = () => {
@@ -176,7 +175,7 @@ const Products: React.FC = () => {
                   
                   <TabsContent value="variants" className="space-y-4">
                     <div className="text-center py-8">
-                      <Variants className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <Settings className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold mb-2">Product Variants</h3>
                       <p className="text-gray-600 mb-4">
                         {formData.type === 'standard' 
