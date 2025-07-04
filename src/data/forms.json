@@ -1,0 +1,206 @@
+
+{
+  "employee": {
+    "title": "Employee Registration",
+    "description": "Add new employee to the system",
+    "fields": [
+      {
+        "name": "firstName",
+        "type": "text",
+        "label": "First Name",
+        "required": true,
+        "placeholder": "Enter first name",
+        "className": "col-span-1",
+        "id": "employee_first_name"
+      },
+      {
+        "name": "lastName",
+        "type": "text",
+        "label": "Last Name",
+        "required": true,
+        "placeholder": "Enter last name",
+        "className": "col-span-1",
+        "id": "employee_last_name"
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "label": "Email Address",
+        "required": true,
+        "placeholder": "employee@company.com",
+        "className": "col-span-2",
+        "id": "employee_email"
+      },
+      {
+        "name": "department",
+        "type": "select",
+        "label": "Department",
+        "required": true,
+        "className": "col-span-1",
+        "id": "employee_department",
+        "options": [
+          {"value": "hr", "label": "Human Resources"},
+          {"value": "sales", "label": "Sales"},
+          {"value": "it", "label": "Information Technology"},
+          {"value": "finance", "label": "Finance"},
+          {"value": "operations", "label": "Operations"}
+        ]
+      },
+      {
+        "name": "position",
+        "type": "text",
+        "label": "Position",
+        "required": true,
+        "placeholder": "Job title",
+        "className": "col-span-1",
+        "id": "employee_position"
+      },
+      {
+        "name": "salary",
+        "type": "number",
+        "label": "Salary",
+        "required": true,
+        "placeholder": "Annual salary",
+        "className": "col-span-1",
+        "id": "employee_salary",
+        "validation": {
+          "min": 0
+        }
+      },
+      {
+        "name": "startDate",
+        "type": "date",
+        "label": "Start Date",
+        "required": true,
+        "className": "col-span-1",
+        "id": "employee_start_date"
+      }
+    ],
+    "submitButtonText": "Add Employee"
+  },
+  "product": {
+    "title": "Product Registration",
+    "description": "Add new product to inventory",
+    "fields": [
+      {
+        "name": "productName",
+        "type": "text",
+        "label": "Product Name",
+        "required": true,
+        "placeholder": "Enter product name",
+        "className": "col-span-2",
+        "id": "product_name"
+      },
+      {
+        "name": "sku",
+        "type": "text",
+        "label": "SKU",
+        "required": true,
+        "placeholder": "Product SKU",
+        "className": "col-span-1",
+        "id": "product_sku"
+      },
+      {
+        "name": "category",
+        "type": "select",
+        "label": "Category",
+        "required": true,
+        "className": "col-span-1",
+        "id": "product_category",
+        "options": [
+          {"value": "electronics", "label": "Electronics"},
+          {"value": "clothing", "label": "Clothing"},
+          {"value": "food", "label": "Food & Beverages"},
+          {"value": "books", "label": "Books"},
+          {"value": "home", "label": "Home & Garden"}
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "label": "Price",
+        "required": true,
+        "placeholder": "Product price",
+        "className": "col-span-1",
+        "id": "product_price",
+        "validation": {
+          "min": 0
+        }
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "label": "Initial Quantity",
+        "required": true,
+        "placeholder": "Stock quantity",
+        "className": "col-span-1",
+        "id": "product_quantity",
+        "validation": {
+          "min": 0
+        }
+      },
+      {
+        "name": "description",
+        "type": "textarea",
+        "label": "Description",
+        "required": false,
+        "placeholder": "Product description",
+        "className": "col-span-2",
+        "id": "product_description"
+      }
+    ],
+    "submitButtonText": "Add Product"
+  },
+  "customer": {
+    "title": "Customer Registration",
+    "description": "Add new customer to the system",
+    "fields": [
+      {
+        "name": "companyName",
+        "type": "text",
+        "label": "Company Name",
+        "required": true,
+        "placeholder": "Enter company name",
+        "className": "col-span-2",
+        "id": "customer_company"
+      },
+      {
+        "name": "contactPerson",
+        "type": "text",
+        "label": "Contact Person",
+        "required": true,
+        "placeholder": "Primary contact name",
+        "className": "col-span-1",
+        "id": "customer_contact"
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "label": "Email Address",
+        "required": true,
+        "placeholder": "contact@company.com",
+        "className": "col-span-1",
+        "id": "customer_email"
+      },
+      {
+        "name": "phone",
+        "type": "text",
+        "label": "Phone Number",
+        "required": true,
+        "placeholder": "+1 (555) 123-4567",
+        "className": "col-span-1",
+        "id": "customer_phone"
+      },
+      {
+        "name": "address",
+        "type": "textarea",
+        "label": "Address",
+        "required": true,
+        "placeholder": "Complete business address",
+        "className": "col-span-2",
+        "id": "customer_address"
+      }
+    ],
+    "submitButtonText": "Add Customer"
+  }
+}
