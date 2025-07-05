@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   name: string;
@@ -11,10 +10,9 @@ export interface Module {
   id: string;
   name: string;
   description: string;
+  category: string;
   icon: string;
-  path: string;
   allowedRoles: ('admin' | 'user' | 'manager')[];
-  color: string;
 }
 
 export interface FormField {
