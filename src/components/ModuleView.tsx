@@ -37,7 +37,7 @@ const ModuleView: React.FC<ModuleViewProps> = ({ moduleId, moduleName, activeTab
 
   // Special handling for specific modules
   if (moduleId === 'inventory') {
-    return <InventoryManager activeTab={activeTab} setActiveTab={setActiveTab} />;
+    return <InventoryManager />;
   }
 
   if (moduleId === 'sales') {
