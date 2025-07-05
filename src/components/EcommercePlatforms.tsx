@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
+import ShopifySetup from './ecommerce/ShopifySetup';
 
 interface Platform {
   id: string;
@@ -83,8 +82,8 @@ const platforms: Platform[] = [
 
 const EcommercePlatforms: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate();
-  const itemsPerPage = 4; // Show 4 platforms at a time
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const itemsPerPage = 4;
 
   const handlePrevious = () => {
     setCurrentIndex((prev) => {
@@ -101,10 +100,30 @@ const EcommercePlatforms: React.FC = () => {
   };
 
   const handlePlatformClick = (platform: Platform) => {
-    // For now, we'll show an alert since we don't have these routes set up
-    alert(`Navigating to ${platform.name} integration page`);
-    // navigate(platform.route);
+    if (platform.id === 'shopify') {
+      setSelectedPlatform('shopify');
+    } else {
+      alert(`${platform.name} integration coming soon!`);
+    }
   };
+
+  if (selectedPlatform === 'shopify') {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="ghost"
+            onClick={() => setSelectedPlatform(null)}
+            className="flex items-center space-x-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Platforms</span>
+          </Button>
+        </div>
+        <ShopifySetup />
+      </div>
+    );
+  }
 
   const visiblePlatforms = platforms.slice(currentIndex, currentIndex + itemsPerPage);
 

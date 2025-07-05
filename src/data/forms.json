@@ -202,5 +202,184 @@
       }
     ],
     "submitButtonText": "Add Customer"
+  },
+  "salesOrder": {
+    "title": "Sales Order",
+    "description": "Create new sales order",
+    "fields": [
+      {
+        "name": "customerName",
+        "type": "select",
+        "label": "Customer",
+        "required": true,
+        "className": "col-span-1",
+        "id": "order_customer",
+        "options": [
+          {"value": "customer1", "label": "ABC Company"},
+          {"value": "customer2", "label": "XYZ Corp"},
+          {"value": "customer3", "label": "Tech Solutions"}
+        ]
+      },
+      {
+        "name": "orderDate",
+        "type": "date",
+        "label": "Order Date",
+        "required": true,
+        "className": "col-span-1",
+        "id": "order_date"
+      },
+      {
+        "name": "deliveryDate",
+        "type": "date",
+        "label": "Expected Delivery",
+        "required": false,
+        "className": "col-span-1",
+        "id": "delivery_date"
+      },
+      {
+        "name": "priority",
+        "type": "select",
+        "label": "Priority",
+        "required": true,
+        "className": "col-span-1",
+        "id": "order_priority",
+        "options": [
+          {"value": "low", "label": "Low"},
+          {"value": "medium", "label": "Medium"},
+          {"value": "high", "label": "High"},
+          {"value": "urgent", "label": "Urgent"}
+        ]
+      },
+      {
+        "name": "notes",
+        "type": "textarea",
+        "label": "Order Notes",
+        "required": false,
+        "placeholder": "Additional notes or instructions",
+        "className": "col-span-2",
+        "id": "order_notes"
+      }
+    ],
+    "submitButtonText": "Create Order",
+    "hasItemDetails": true,
+    "itemFields": [
+      {
+        "name": "product",
+        "type": "select",
+        "label": "Product",
+        "required": true,
+        "id": "item_product",
+        "options": [
+          {"value": "prod1", "label": "Product A"},
+          {"value": "prod2", "label": "Product B"},
+          {"value": "prod3", "label": "Product C"}
+        ]
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "label": "Quantity",
+        "required": true,
+        "id": "item_quantity",
+        "validation": {
+          "min": 1
+        }
+      },
+      {
+        "name": "unitPrice",
+        "type": "number",
+        "label": "Unit Price",
+        "required": true,
+        "id": "item_price",
+        "validation": {
+          "min": 0
+        }
+      },
+      {
+        "name": "discount",
+        "type": "number",
+        "label": "Discount %",
+        "required": false,
+        "id": "item_discount",
+        "validation": {
+          "min": 0,
+          "max": 100
+        }
+      }
+    ]
+  },
+  "businessPartner": {
+    "title": "Business Partner Registration",
+    "description": "Add new business partner (customer/vendor)",
+    "fields": [
+      {
+        "name": "partnerType",
+        "type": "select",
+        "label": "Partner Type",
+        "required": true,
+        "className": "col-span-1",
+        "id": "partner_type",
+        "options": [
+          {"value": "customer", "label": "Customer"},
+          {"value": "vendor", "label": "Vendor"},
+          {"value": "both", "label": "Both"}
+        ]
+      },
+      {
+        "name": "companyName",
+        "type": "text",
+        "label": "Company Name",
+        "required": true,
+        "placeholder": "Enter company name",
+        "className": "col-span-1",
+        "id": "partner_company"
+      },
+      {
+        "name": "contactPerson",
+        "type": "text",
+        "label": "Contact Person",
+        "required": true,
+        "placeholder": "Primary contact name",
+        "className": "col-span-1",
+        "id": "partner_contact"
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "label": "Email Address",
+        "required": true,
+        "placeholder": "contact@company.com",
+        "className": "col-span-1",
+        "id": "partner_email"
+      },
+      {
+        "name": "phone",
+        "type": "text",
+        "label": "Phone Number",
+        "required": true,
+        "placeholder": "+1 (555) 123-4567",
+        "className": "col-span-1",
+        "id": "partner_phone"
+      },
+      {
+        "name": "taxId",
+        "type": "text",
+        "label": "Tax ID",
+        "required": false,
+        "placeholder": "Tax identification number",
+        "className": "col-span-1",
+        "id": "partner_tax_id"
+      },
+      {
+        "name": "address",
+        "type": "textarea",
+        "label": "Address",
+        "required": true,
+        "placeholder": "Complete business address",
+        "className": "col-span-2",
+        "id": "partner_address"
+      }
+    ],
+    "submitButtonText": "Add Business Partner"
   }
 }

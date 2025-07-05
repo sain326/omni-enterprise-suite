@@ -3,6 +3,8 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import BusinessPartners from './BusinessPartners';
 import SalesOrders from './SalesOrders';
+import DynamicFormWithItems from '../DynamicFormWithItems';
+import formsData from '@/data/forms.json';
 
 interface SalesModuleProps {
   activeTab: string;
@@ -10,6 +12,11 @@ interface SalesModuleProps {
 }
 
 const SalesModule: React.FC<SalesModuleProps> = ({ activeTab, setActiveTab }) => {
+  const handleFormSubmit = (data: Record<string, any>) => {
+    console.log('Form submitted:', data);
+    // Here you would typically send data to your API
+  };
+
   return (
     <div className="space-y-6 p-6">
       {activeTab === 'overview' && (
@@ -77,6 +84,32 @@ const SalesModule: React.FC<SalesModuleProps> = ({ activeTab, setActiveTab }) =>
             <p className="text-gray-600">Manage and track your sales orders</p>
           </div>
           <SalesOrders />
+        </div>
+      )}
+
+      {activeTab === 'create-order' && (
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Create Sales Order</h1>
+            <p className="text-gray-600">Create a new sales order with item details</p>
+          </div>
+          <DynamicFormWithItems 
+            config={formsData.salesOrder as any}
+            onSubmit={handleFormSubmit}
+          />
+        </div>
+      )}
+
+      {activeTab === 'create-partner' && (
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Add Business Partner</h1>
+            <p className="text-gray-600">Register a new customer or vendor</p>
+          </div>
+          <DynamicFormWithItems 
+            config={formsData.businessPartner as any}
+            onSubmit={handleFormSubmit}
+          />
         </div>
       )}
 
