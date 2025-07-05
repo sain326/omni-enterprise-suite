@@ -55,8 +55,8 @@ const Index = () => {
   }
 
   // User is logged in, proceed with main app
-  const filteredModules = modulesData.modules.filter(module => 
-    module.allowedRoles.includes(user.role)
+  const filteredModules = modulesData.modules.filter((module): module is Module => 
+    module.allowedRoles.includes(user.role as 'admin' | 'user' | 'manager')
   );
 
   const handleModuleClick = (module: Module) => {
