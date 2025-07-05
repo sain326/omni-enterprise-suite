@@ -41,6 +41,13 @@ export function AppSidebar({ currentView, setCurrentView, user, logout, selected
     setCurrentView('modules');
   };
 
+  const handleTabClick = (tabId: string) => {
+    console.log('Tab clicked:', tabId);
+    if (setActiveTab) {
+      setActiveTab(tabId);
+    }
+  };
+
   const getModuleNavigation = (moduleId: string) => {
     switch (moduleId) {
       case 'sales':
@@ -53,8 +60,8 @@ export function AppSidebar({ currentView, setCurrentView, user, logout, selected
       case 'hr':
         return [
           { title: 'Overview', icon: BarChart3, id: 'overview' },
-          { title: 'Add New', icon: Plus, id: 'add-new' },
-          { title: 'Manage', icon: Settings, id: 'manage' },
+          { title: 'Add Employee', icon: Plus, id: 'add-new' },
+          { title: 'Manage Employees', icon: Settings, id: 'manage' },
           { title: 'Reports', icon: FileText, id: 'reports' }
         ];
       case 'inventory':
@@ -66,12 +73,6 @@ export function AppSidebar({ currentView, setCurrentView, user, logout, selected
           { title: 'Warehouses', icon: Settings, id: 'warehouses' },
           { title: 'Attributes', icon: Settings, id: 'attributes' },
           { title: 'Attribute Values', icon: Settings, id: 'attribute-values' }
-        ];
-      case 'pos':
-        return [
-          { title: 'POS Terminal', icon: CreditCard, id: 'terminal' },
-          { title: 'Transactions', icon: FileText, id: 'transactions' },
-          { title: 'Reports', icon: BarChart3, id: 'reports' }
         ];
       default:
         return [
@@ -120,50 +121,13 @@ export function AppSidebar({ currentView, setCurrentView, user, logout, selected
                   <SidebarMenuItem key={item.id}>
                     <SidebarMenuButton 
                       className={`w-full ${activeTab === item.id ? 'bg-blue-100 text-blue-700' : ''}`}
-                      onClick={() => setActiveTab?.(item.id)}
+                      onClick={() => handleTabClick(item.id)}
                     >
                       <item.icon className="mr-3 h-4 w-4" />
                       {item.title}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        )}
-
-        {currentView === 'pos' && (
-          <SidebarGroup>
-            <SidebarGroupLabel>POS System</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    className={`w-full ${activeTab === 'terminal' ? 'bg-blue-100 text-blue-700' : ''}`}
-                    onClick={() => setActiveTab?.('terminal')}
-                  >
-                    <CreditCard className="mr-3 h-4 w-4" />
-                    POS Terminal
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    className={`w-full ${activeTab === 'transactions' ? 'bg-blue-100 text-blue-700' : ''}`}
-                    onClick={() => setActiveTab?.('transactions')}
-                  >
-                    <FileText className="mr-3 h-4 w-4" />
-                    Transactions
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    className={`w-full ${activeTab === 'reports' ? 'bg-blue-100 text-blue-700' : ''}`}
-                    onClick={() => setActiveTab?.('reports')}
-                  >
-                    <BarChart3 className="mr-3 h-4 w-4" />
-                    Reports
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

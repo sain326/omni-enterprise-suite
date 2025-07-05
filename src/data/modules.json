@@ -4,65 +4,66 @@
     {
       "id": "hr",
       "name": "Human Resources",
-      "description": "Employee management, payroll, and HR operations",
-      "icon": "users",
-      "path": "/hr",
-      "allowedRoles": ["admin", "manager"],
-      "color": "from-blue-500 to-blue-600"
+      "description": "Manage employees, payroll, and HR operations",
+      "icon": "Users",
+      "color": "blue",
+      "allowedRoles": ["admin", "manager"]
     },
     {
       "id": "inventory",
       "name": "Inventory Management",
-      "description": "Stock control, warehouse management, and procurement",
-      "icon": "package",
-      "path": "/inventory",
-      "allowedRoles": ["admin", "user", "manager"],
-      "color": "from-green-500 to-green-600"
+      "description": "Track products, stock levels, and warehouse operations",
+      "icon": "Package",
+      "color": "green",
+      "allowedRoles": ["admin", "manager", "user"]
     },
     {
       "id": "sales",
       "name": "Sales Management",
-      "description": "Lead tracking, opportunity management, and sales pipeline",
-      "icon": "shopping-cart",
-      "path": "/sales",
-      "allowedRoles": ["admin", "user", "manager"],
-      "color": "from-purple-500 to-purple-600"
+      "description": "Manage customers, orders, and sales operations",
+      "icon": "ShoppingCart",
+      "color": "purple",
+      "allowedRoles": ["admin", "manager", "user"]
     },
     {
-      "id": "delivery",
-      "name": "Delivery Management",
-      "description": "Shipping, logistics, and delivery tracking",
-      "icon": "truck",
-      "path": "/delivery",
-      "allowedRoles": ["admin", "manager"],
-      "color": "from-orange-500 to-orange-600"
-    },
-    {
-      "id": "invoice",
-      "name": "Invoice Management",
-      "description": "Billing, invoicing, and payment tracking",
-      "icon": "file-text",
-      "path": "/invoice",
-      "allowedRoles": ["admin", "manager"],
-      "color": "from-red-500 to-red-600"
+      "id": "finance",
+      "name": "Finance & Accounting",
+      "description": "Handle financial transactions and accounting",
+      "icon": "DollarSign",
+      "color": "yellow",
+      "allowedRoles": ["admin", "manager"]
     },
     {
       "id": "pos",
       "name": "Point of Sale",
-      "description": "In-store sales, payment processing, and receipts",
-      "icon": "credit-card",
-      "path": "/pos",
-      "allowedRoles": ["admin", "user"],
-      "color": "from-indigo-500 to-indigo-600"
+      "description": "Process sales transactions and manage POS operations",
+      "icon": "CreditCard",
+      "color": "indigo",
+      "allowedRoles": ["admin", "manager", "user"]
     },
     {
       "id": "ecommerce",
-      "name": "E-commerce Integration",
-      "description": "Online store management and order processing",
-      "icon": "globe",
-      "path": "/ecommerce",
-      "allowedRoles": ["admin"],
-      "color": "from-teal-500 to-teal-600"
+      "name": "E-commerce Platforms",
+      "description": "Manage online store integrations and e-commerce operations",
+      "icon": "Globe",
+      "color": "teal",
+      "allowedRoles": ["admin", "manager"]
+    },
+    {
+      "id": "reporting",
+      "name": "Reports & Analytics",
+      "description": "Generate reports and analyze business data",
+      "icon": "BarChart3",
+      "color": "orange",
+      "allowedRoles": ["admin", "manager"]
+    },
+    {
+      "id": "settings",
+      "name": "System Settings",
+      "description": "Configure system preferences and manage users",
+      "icon": "Settings",
+      "color": "gray",
+      "allowedRoles": ["admin"]
     }
   ]
 }

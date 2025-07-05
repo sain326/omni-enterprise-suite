@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginForm from '@/components/LoginForm';
+import RegisterForm from '@/components/RegisterForm';
 import ModuleCard from '@/components/ModuleCard';
 import Dashboard from '@/components/Dashboard';
 import ModuleView from '@/components/ModuleView';
@@ -9,17 +10,27 @@ import EcommercePlatforms from '@/components/EcommercePlatforms';
 import POSSystem from '@/components/pos/POSSystem';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import { Module } from '@/types';
 import modulesData from '@/data/modules.json';
 
 const Index = () => {
   const { user, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'dashboard' | 'modules' | 'module' | 'ecommerce' | 'pos'>('modules');
+  const [currentView, setCurrentView] = useState<'login' | 'register' | 'dashboard' | 'modules' | 'module' | 'ecommerce' | 'pos'>('login');
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [activeTab, setActiveTab] = useState<string>('overview');
 
+  if (!user && currentView === 'login') {
+    return <LoginForm onRegister={() => setCurrentView('register')} />;
+  }
+
+  if (!user && currentView === 'register') {
+    return <RegisterForm onBackToLogin={() => setCurrentView('login')} />;
+  }
+
   if (!user) {
-    return <LoginForm />;
+    return <LoginForm onRegister={() => setCurrentView('register')} />;
   }
 
   const filteredModules = (modulesData.modules as Module[]).filter(module => 
@@ -39,8 +50,28 @@ const Index = () => {
     }
   };
 
-  // Show sidebar when inside a module, ecommerce, or POS
-  if (currentView === 'module' || currentView === 'ecommerce' || currentView === 'pos') {
+  // Full screen POS view
+  if (currentView === 'pos') {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="p-4 bg-white border-b flex items-center">
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentView('modules')}
+            className="mr-4"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Modules
+          </Button>
+          <h1 className="text-xl font-bold">POS System</h1>
+        </div>
+        <POSSystem />
+      </div>
+    );
+  }
+
+  // Show sidebar when inside a module or ecommerce
+  if (currentView === 'module' || currentView === 'ecommerce') {
     return (
       <SidebarProvider>
         <div className="min-h-screen flex w-full bg-gray-50">
@@ -55,10 +86,8 @@ const Index = () => {
           />
           
           <SidebarInset className="flex-1">
-            <main className="p-6">
+            <main>
               {currentView === 'ecommerce' && <EcommercePlatforms />}
-              
-              {currentView === 'pos' && <POSSystem />}
               
               {currentView === 'module' && selectedModule && (
                 <ModuleView 
