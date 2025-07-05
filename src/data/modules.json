@@ -2,68 +2,68 @@
 {
   "modules": [
     {
-      "id": "hr",
-      "name": "Human Resources",
-      "description": "Manage employees, payroll, and HR operations",
-      "icon": "Users",
-      "color": "blue",
-      "allowedRoles": ["admin", "manager"]
+      "id": "sales",
+      "name": "Sales",
+      "description": "Manage sales operations, orders, and customer relationships",
+      "category": "Business",
+      "icon": "📊",
+      "allowedRoles": ["admin", "manager", "user"]
     },
     {
       "id": "inventory",
-      "name": "Inventory Management",
-      "description": "Track products, stock levels, and warehouse operations",
-      "icon": "Package",
-      "color": "green",
-      "allowedRoles": ["admin", "manager", "user"]
-    },
-    {
-      "id": "sales",
-      "name": "Sales Management",
-      "description": "Manage customers, orders, and sales operations",
-      "icon": "ShoppingCart",
-      "color": "purple",
-      "allowedRoles": ["admin", "manager", "user"]
-    },
-    {
-      "id": "finance",
-      "name": "Finance & Accounting",
-      "description": "Handle financial transactions and accounting",
-      "icon": "DollarSign",
-      "color": "yellow",
+      "name": "Inventory",
+      "description": "Track products, manage stock levels, and control warehouses",
+      "category": "Operations",
+      "icon": "📦",
       "allowedRoles": ["admin", "manager"]
+    },
+    {
+      "id": "hr",
+      "name": "Human Resources",
+      "description": "Employee management, payroll, and HR operations",
+      "category": "People",
+      "icon": "👥",
+      "allowedRoles": ["admin", "manager"]
+    },
+    {
+      "id": "accounting",
+      "name": "Accounting",
+      "description": "Financial management, invoicing, and reporting",
+      "category": "Finance",
+      "icon": "💰",
+      "allowedRoles": ["admin", "manager"]
+    },
+    {
+      "id": "crm",
+      "name": "CRM",
+      "description": "Customer relationship management and communications",
+      "category": "Customer",
+      "icon": "🤝",
+      "allowedRoles": ["admin", "manager", "user"]
     },
     {
       "id": "pos",
       "name": "Point of Sale",
-      "description": "Process sales transactions and manage POS operations",
-      "icon": "CreditCard",
-      "color": "indigo",
+      "description": "Complete POS system for retail operations",
+      "category": "Retail",
+      "icon": "🛒",
       "allowedRoles": ["admin", "manager", "user"]
     },
     {
       "id": "ecommerce",
-      "name": "E-commerce Platforms",
-      "description": "Manage online store integrations and e-commerce operations",
-      "icon": "Globe",
-      "color": "teal",
+      "name": "E-commerce",
+      "description": "Online store management and integrations",
+      "category": "Digital",
+      "icon": "🌐",
       "allowedRoles": ["admin", "manager"]
     },
     {
-      "id": "reporting",
-      "name": "Reports & Analytics",
-      "description": "Generate reports and analyze business data",
-      "icon": "BarChart3",
-      "color": "orange",
+      "id": "reports",
+      "name": "Reports",
+      "description": "Business intelligence and analytics dashboard",
+      "category": "Analytics",
+      "icon": "📈",
       "allowedRoles": ["admin", "manager"]
-    },
-    {
-      "id": "settings",
-      "name": "System Settings",
-      "description": "Configure system preferences and manage users",
-      "icon": "Settings",
-      "color": "gray",
-      "allowedRoles": ["admin"]
     }
   ]
 }

@@ -55,10 +55,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Mock authentication - in real app, this would be an API call
     console.log('Attempting login with:', email, password);
     
-    // Accept any email with password "password" or match our mock users
+    // Accept password "password" for any email, or match our mock users
     let foundUser = mockUsers.find(u => u.email === email);
     
     if (!foundUser && password === 'password') {

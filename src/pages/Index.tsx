@@ -21,34 +21,46 @@ const Index = () => {
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [activeTab, setActiveTab] = useState<string>('overview');
 
-  // Set initial view to modules when user logs in
+  // Set initial view based on user state
   useEffect(() => {
-    if (user && currentView === 'login') {
-      console.log('User logged in, setting view to modules');
-      setCurrentView('modules');
-    } else if (!user) {
+    console.log('Index useEffect - user:', user, 'currentView:', currentView);
+    if (user) {
+      // User is logged in, show modules by default
+      if (currentView === 'login' || currentView === 'register') {
+        console.log('User logged in, setting view to modules');
+        setCurrentView('modules');
+      }
+    } else {
+      // No user, show login
       console.log('No user, setting view to login');
       setCurrentView('login');
     }
-  }, [user, currentView]);
+  }, [user]);
 
+  console.log('Index render - user:', user, 'currentView:', currentView);
+
+  // Show login form if no user and on login view
   if (!user && currentView === 'login') {
     return <LoginForm onRegister={() => setCurrentView('register')} />;
   }
 
+  // Show register form if no user and on register view
   if (!user && currentView === 'register') {
     return <RegisterForm onBackToLogin={() => setCurrentView('login')} />;
   }
 
+  // If no user but not on login/register, redirect to login
   if (!user) {
     return <LoginForm onRegister={() => setCurrentView('register')} />;
   }
 
+  // User is logged in, proceed with main app
   const filteredModules = (modulesData.modules as Module[]).filter(module => 
     module.allowedRoles.includes(user.role)
   );
 
   const handleModuleClick = (module: Module) => {
+    console.log('Module clicked:', module.id);
     if (module.id === 'ecommerce') {
       setCurrentView('ecommerce');
     } else if (module.id === 'pos') {
