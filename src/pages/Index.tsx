@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginForm from '@/components/LoginForm';
 import RegisterForm from '@/components/RegisterForm';
@@ -20,6 +20,17 @@ const Index = () => {
   const [currentView, setCurrentView] = useState<'login' | 'register' | 'dashboard' | 'modules' | 'module' | 'ecommerce' | 'pos'>('login');
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [activeTab, setActiveTab] = useState<string>('overview');
+
+  // Set initial view to modules when user logs in
+  useEffect(() => {
+    if (user && currentView === 'login') {
+      console.log('User logged in, setting view to modules');
+      setCurrentView('modules');
+    } else if (!user) {
+      console.log('No user, setting view to login');
+      setCurrentView('login');
+    }
+  }, [user, currentView]);
 
   if (!user && currentView === 'login') {
     return <LoginForm onRegister={() => setCurrentView('register')} />;
